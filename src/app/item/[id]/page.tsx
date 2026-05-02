@@ -5,10 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { useItem } from "@/hooks";
+import { useBookmarks } from "@/context/BookmarksContext";
 import { ErrorState } from "@/components/ui/ErrorState";
 
 export default function ItemDetailPage({ params }: { params: { id: string } }) {
   const { item, loading, error } = useItem(params.id);
+  const { isBookmarked } = useBookmarks();
 
   if (loading) {
     return (
@@ -51,6 +53,11 @@ export default function ItemDetailPage({ params }: { params: { id: string } }) {
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
         <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-end pb-12">
           <div className="inline-flex items-center gap-2 mb-4 animate-fade-in-up">
+            {(item.featured || isBookmarked(item.id)) && (
+              <span className="px-3 py-1 bg-amber-500 text-white shadow-md rounded-full text-sm font-medium">
+                Featured
+              </span>
+            )}
             <span className="px-3 py-1 bg-primary/20 text-primary backdrop-blur-md rounded-full text-sm font-medium border border-primary/20">
               {item.category}
             </span>
