@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ItemGrid } from "@/components/cards/ItemGrid";
 import { useItems } from "@/hooks";
+import { PageWrapper } from "@/components/layout/PageWrapper";
+import { motion } from "framer-motion";
 
 export default function DashboardPage() {
   // Simulate fetching user's saved items or quick history
@@ -19,7 +21,7 @@ export default function DashboardPage() {
   }, []);
 
   return (
-    <main className="min-h-[calc(100vh-4rem)] bg-background">
+    <PageWrapper className="min-h-[calc(100vh-4rem)] bg-background">
       {/* Dashboard Header Profile */}
       <section className="relative h-[35vh] w-full bg-muted overflow-hidden">
         <Image
@@ -31,7 +33,12 @@ export default function DashboardPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
         
-        <div className="absolute bottom-0 w-full animate-fade-in-up">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="absolute bottom-0 w-full"
+        >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 flex items-end gap-6">
             <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full border-4 border-background overflow-hidden bg-primary shadow-xl">
               <Image 
@@ -48,7 +55,7 @@ export default function DashboardPage() {
               <p className="text-muted-foreground mt-1">Cultural Explorer • Joined just now</p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Dashboard Stats */}
@@ -60,16 +67,27 @@ export default function DashboardPage() {
             { label: "Contributions", value: "0" },
             { label: "Curator Rank", value: "Novice" },
           ].map((stat, i) => (
-            <div key={i} className="glass p-6 rounded-2xl border border-white/5 animate-fade-in-up" style={{ animationDelay: `${i * 100}ms` }}>
+            <motion.div 
+              key={i} 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 + (i * 0.1) }}
+              className="glass p-6 rounded-2xl border border-white/5"
+            >
               <p className="text-sm font-medium text-muted-foreground">{stat.label}</p>
               <p className="text-3xl font-bold text-foreground mt-2">{stat.value}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
 
       {/* Recommended or Saved Items Grid */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <motion.section 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 0.6 }}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16"
+      >
         <div className="flex items-center justify-between mb-8">
           <div>
             <h2 className="text-2xl font-bold text-foreground">Recommended for You</h2>
@@ -81,7 +99,7 @@ export default function DashboardPage() {
         </div>
 
         <ItemGrid items={items.slice(0, 4)} loading={loading} error={error} />
-      </section>
-    </main>
+      </motion.section>
+    </PageWrapper>
   );
 }

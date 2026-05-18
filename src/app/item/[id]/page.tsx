@@ -7,6 +7,8 @@ import { notFound } from "next/navigation";
 import { useItem } from "@/hooks";
 import { useBookmarks } from "@/context/BookmarksContext";
 import { ErrorState } from "@/components/ui/ErrorState";
+import { PageWrapper } from "@/components/layout/PageWrapper";
+import { motion } from "framer-motion";
 
 export default function ItemDetailPage({ params }: { params: { id: string } }) {
   const { item, loading, error } = useItem(params.id);
@@ -39,7 +41,7 @@ export default function ItemDetailPage({ params }: { params: { id: string } }) {
   }
 
   return (
-    <main className="min-h-screen bg-background pb-20">
+    <PageWrapper className="min-h-screen bg-background pb-20">
       {/* Hero Section */}
       <section className="relative h-[60vh] sm:h-[70vh] w-full overflow-hidden">
         <Image
@@ -52,8 +54,13 @@ export default function ItemDetailPage({ params }: { params: { id: string } }) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
         <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-end pb-12">
-          <div className="inline-flex items-center gap-2 mb-4 animate-fade-in-up">
-            {(item.featured || isBookmarked(item.id)) && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 mb-4"
+          >
+            {isBookmarked(item.id) && (
               <span className="px-3 py-1 bg-amber-500 text-white shadow-md rounded-full text-sm font-medium">
                 Featured
               </span>
@@ -64,11 +71,23 @@ export default function ItemDetailPage({ params }: { params: { id: string } }) {
             <span className="px-3 py-1 bg-secondary/80 text-secondary-foreground backdrop-blur-md rounded-full text-sm font-medium">
               {item.era}
             </span>
-          </div>
-          <h1 className="text-5xl sm:text-7xl font-bold tracking-tight text-foreground mb-4 animate-fade-in-up" style={{ animationDelay: "100ms" }}>
+          </motion.div>
+          
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-5xl sm:text-7xl font-bold tracking-tight text-foreground mb-4"
+          >
             {item.title}
-          </h1>
-          <div className="flex flex-wrap items-center gap-4 text-muted-foreground animate-fade-in-up" style={{ animationDelay: "200ms" }}>
+          </motion.h1>
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="flex flex-wrap items-center gap-4 text-muted-foreground"
+          >
             <span className="flex items-center gap-1.5">
               <span className="w-4 h-4 rounded-full bg-accent inline-block" />
               {item.location}
@@ -76,7 +95,7 @@ export default function ItemDetailPage({ params }: { params: { id: string } }) {
             <span className="flex items-center gap-1 text-amber-500">
               ★ <span className="font-medium text-foreground">{item.rating}</span> ({item.reviewCount.toLocaleString()} reviews)
             </span>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -84,25 +103,40 @@ export default function ItemDetailPage({ params }: { params: { id: string } }) {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 grid grid-cols-1 lg:grid-cols-3 gap-16">
         <div className="lg:col-span-2 space-y-12">
           {/* Tags */}
-          <div className="flex flex-wrap gap-2">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="flex flex-wrap gap-2"
+          >
             {item.tags.map(tag => (
               <span key={tag} className="px-3 py-1 bg-muted text-muted-foreground rounded-full text-sm">
                 #{tag}
               </span>
             ))}
-          </div>
+          </motion.div>
 
           {/* Description */}
-          <article className="prose prose-lg dark:prose-invert">
+          <motion.article 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="prose prose-lg dark:prose-invert"
+          >
             <h2 className="text-3xl font-semibold tracking-tight text-foreground mb-6">About the Heritage</h2>
             <p className="text-lg leading-relaxed text-muted-foreground">
               {item.longDescription || item.description}
             </p>
-          </article>
+          </motion.article>
 
           {/* Artifacts */}
           {item.artifacts && item.artifacts.length > 0 && (
-            <div className="space-y-6">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="space-y-6"
+            >
               <h2 className="text-3xl font-semibold tracking-tight text-foreground">Featured Artifacts</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {item.artifacts.map((artifact) => (
@@ -125,12 +159,17 @@ export default function ItemDetailPage({ params }: { params: { id: string } }) {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           )}
         </div>
 
         {/* Sidebar */}
-        <aside className="space-y-8">
+        <motion.aside 
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.6 }}
+          className="space-y-8"
+        >
           <div className="glass rounded-3xl p-8 border border-white/10 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -mr-16 -mt-16" />
             <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
@@ -161,8 +200,8 @@ export default function ItemDetailPage({ params }: { params: { id: string } }) {
               ← Back to Collection
             </Link>
           </div>
-        </aside>
+        </motion.aside>
       </section>
-    </main>
+    </PageWrapper>
   );
 }

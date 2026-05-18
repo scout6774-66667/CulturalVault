@@ -45,7 +45,7 @@ export function ItemCard({ item, index = 0 }: ItemCardProps) {
              </p>
           </div>
 
-          {(item.featured || bookmarked) && (
+          {bookmarked && (
             <div className="absolute top-3 left-3 px-2 py-0.5 bg-amber-500 text-white text-xs font-semibold rounded-full shadow z-20">
               Featured
             </div>

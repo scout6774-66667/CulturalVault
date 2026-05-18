@@ -8,6 +8,7 @@ import { CulturalItem } from "@/types";
 import { itemsService } from "@/services/itemsService";
 import { ItemCard } from "@/components/cards/ItemCard";
 import { CardSkeleton } from "@/components/skeletons/CardSkeleton";
+import { PageWrapper } from "@/components/layout/PageWrapper";
 import React from "react";
 
 export default function BookmarksPage() {
@@ -34,7 +35,7 @@ export default function BookmarksPage() {
   }, [bookmarks]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <PageWrapper className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="font-display text-3xl font-bold flex items-center gap-3">
@@ -94,6 +95,6 @@ export default function BookmarksPage() {
           ))}
         </div>
       )}
-    </div>
+    </PageWrapper>
   );
 }
