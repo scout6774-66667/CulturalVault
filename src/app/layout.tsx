@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "leaflet/dist/leaflet.css";
+
+
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { BookmarksProvider } from "@/context/BookmarksContext";
+import { LanguageProvider } from "@/context/LanguageContext";
+
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/Toaster";
-import { LanguageProvider } from "@/context/LanguageContext";
+
 
 export const metadata: Metadata = {
   title: "CulturalVault — World Heritage Explorer",

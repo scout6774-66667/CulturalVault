@@ -16,6 +16,11 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(auth)/signup/page.js"
     ],
+    "/admin/login/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/admin/login/page.js"
+    ],
     "/(auth)/signin/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -25,6 +30,16 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/explore/page.js"
+    ],
+    "/risk-map/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/risk-map/page.js"
+    ],
+    "/admin/signup/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/admin/signup/page.js"
     ]
   }
 }

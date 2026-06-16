@@ -33,6 +33,7 @@ export function Navbar() {
   const navLinks = [
     { href: "/explore", label:  t.explore },
     { href: "/bookmarks", label: t.bookmarks },
+    { href: "/risk-map", label: "Risk Dashboard" },
   ];
 
   return (

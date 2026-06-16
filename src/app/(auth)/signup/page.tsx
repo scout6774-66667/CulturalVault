@@ -137,14 +137,33 @@ export default function SignUpPage() {
             </button>
           </form>
 
-          <p className="mt-8 text-center text-sm text-muted-foreground">
-            Already registered?{" "}
-            <Link href="/signin" className="text-secondary hover:underline font-medium">
-              Sign in
-            </Link>
-          </p>
-        </div>
-      </div>
-    </div>
+                    <div className="mt-8">
+            <div className="border-t border-white/10 pt-5 text-center">
+              <p className="text-sm text-muted-foreground">
+                Already registered?{" "}
+                <Link
+                  href="/signin"
+                  className="text-secondary hover:underline font-medium"
+                >
+                  Sign in
+                </Link>
+              </p>
+
+              <p className="text-sm text-muted-foreground mt-3">
+                Administrator?{" "}
+                <Link
+                  href="/admin/login"
+                  className="text-orange-500 hover:text-orange-400 hover:underline font-semibold"
+                >
+                  Admin Sign In
+                </Link>
+              </p>
+            </div>
+          </div>
+
+        </div> 
+      </div> 
+    </div>   
   );
 }
+
