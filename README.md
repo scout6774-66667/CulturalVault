@@ -1,6 +1,6 @@
 # 🌍 CulturalVault — World Heritage Explorer
 
-A production-ready, full-stack cultural heritage web application built with **Next.js 14**, **TypeScript**, **Tailwind CSS**, and **Framer Motion**.
+A production-ready, full-stack cultural heritage web application built with **Next.js 15**, **TypeScript**, **Tailwind CSS**, and **Framer Motion**.
 
 ![CulturalVault Preview](https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=1200&q=80)
 
