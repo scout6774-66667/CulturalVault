@@ -1,8 +1,8 @@
-// File: C:\Users\DELL\CulturalVault\src\app\admin\signup\page.tsx
-import * as entry from '../../../../../src/app/admin/signup/page.js'
+// File: C:\Users\DELL\CulturalVault\src\app\admin\dashboard\page.tsx
+import * as entry from '../../../../../src/app/admin/dashboard/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
-type TEntry = typeof import('../../../../../src/app/admin/signup/page.js')
+type TEntry = typeof import('../../../../../src/app/admin/dashboard/page.js')
 
 // Check that the entry is a valid entry
 checkFields<Diff<{

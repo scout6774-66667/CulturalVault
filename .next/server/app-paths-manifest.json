@@ -1,10 +1,11 @@
 {
-  "/page": "app/page.js",
-  "/(auth)/signup/page": "app/(auth)/signup/page.js",
-  "/(auth)/signin/page": "app/(auth)/signin/page.js",
-  "/explore/page": "app/explore/page.js",
   "/admin/login/page": "app/admin/login/page.js",
-  "/admin/signup/page": "app/admin/signup/page.js",
-  "/api/items/route": "app/api/items/route.js",
-  "/risk-map/page": "app/risk-map/page.js"
+  "/(auth)/signup/page": "app/(auth)/signup/page.js",
+  "/page": "app/page.js",
+  "/risk-map/page": "app/risk-map/page.js",
+  "/explore/page": "app/explore/page.js",
+  "/admin/dashboard/page": "app/admin/dashboard/page.js",
+  "/(auth)/signin/page": "app/(auth)/signin/page.js",
+  "/api/risk-sites/route": "app/api/risk-sites/route.js",
+  "/api/items/route": "app/api/items/route.js"
 }

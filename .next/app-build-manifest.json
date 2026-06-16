@@ -21,25 +21,25 @@
       "static/chunks/main-app.js",
       "static/chunks/app/admin/login/page.js"
     ],
-    "/(auth)/signin/page": [
+    "/admin/dashboard/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(auth)/signin/page.js"
-    ],
-    "/explore/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/explore/page.js"
+      "static/chunks/app/admin/dashboard/page.js"
     ],
     "/risk-map/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/risk-map/page.js"
     ],
-    "/admin/signup/page": [
+    "/explore/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/admin/signup/page.js"
+      "static/chunks/app/explore/page.js"
+    ],
+    "/(auth)/signin/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(auth)/signin/page.js"
     ]
   }
 }
