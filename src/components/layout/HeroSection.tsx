@@ -2,8 +2,12 @@
 
 import { motion } from "framer-motion";
 import { Compass, Sparkles } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/lib/translations";
 
 export function HeroSection() {
+  const { language } = useLanguage();
+  const t = translations[language];
   return (
     <section className="relative hero-gradient overflow-hidden pt-16 pb-8 sm:pt-24 sm:pb-12">
       {/* Decorative circles */}
@@ -24,17 +28,16 @@ export function HeroSection() {
             transition={{ delay: 0.2 }}
           >
             <Sparkles size={12} />
-            12 World Heritage Cultures Catalogued
+            {t.cataloguedCultures}
           </motion.div>
 
           <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] mb-5">
-            Discover the World's{" "}
-            <span className="gradient-text">Cultural Soul</span>
+            {t.heroTitleLine1}{" "}
+            <span className="gradient-text">{t.heroTitleLine2}</span>
           </h1>
 
           <p className="text-muted-foreground text-lg sm:text-xl leading-relaxed mb-8 max-w-2xl">
-            Explore centuries of human creativity — from ancient wonders to living traditions, 
-            art forms, and culinary heritage that define civilizations.
+            {t.heroDescription}
           </p>
 
           <div className="flex flex-wrap gap-3">
@@ -43,13 +46,13 @@ export function HeroSection() {
               className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-xl font-medium hover:bg-primary/90 transition-all hover:scale-105 shadow-lg shadow-primary/25"
             >
               <Compass size={18} />
-              Start Exploring
+              {t.startExploring}
             </a>
             <a
               href="/bookmarks"
               className="inline-flex items-center gap-2 px-6 py-3 bg-secondary text-secondary-foreground rounded-xl font-medium hover:bg-secondary/80 transition-colors"
             >
-              My Collection
+             {t.myCollection}
             </a>
           </div>
         </motion.div>
@@ -62,11 +65,11 @@ export function HeroSection() {
           transition={{ delay: 0.5 }}
         >
           {[
-            { value: "12+", label: "Cultural Items" },
-            { value: "8", label: "Categories" },
-            { value: "6", label: "Continents" },
-            { value: "50K+", label: "Years of History" },
-          ].map(({ value, label }) => (
+             { value: "12+", label: t.culturalItems },
+             { value: "8", label: t.categories },
+             { value: "6", label: t.continents },
+             { value: "50K+", label: t.yearsOfHistory },
+            ].map(({ value, label }) => (
             <div key={label}>
               <p className="font-display text-2xl font-bold text-primary">{value}</p>
               <p className="text-sm text-muted-foreground mt-0.5">{label}</p>

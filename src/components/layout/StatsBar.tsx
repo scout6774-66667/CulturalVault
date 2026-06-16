@@ -2,15 +2,20 @@
 
 import { motion } from "framer-motion";
 import { TrendingUp, Globe, Award, Eye } from "lucide-react";
-
-const stats = [
-  { icon: Globe, label: "Cultures Documented", value: "12" },
-  { icon: Award, label: "UNESCO Recognized", value: "8" },
-  { icon: TrendingUp, label: "Avg. Rating", value: "4.7" },
-  { icon: Eye, label: "Total Reviews", value: "340K+" },
-];
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/lib/translations";
 
 export function StatsBar() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
+  const stats = [
+    { icon: Globe, label: t.culturesDocumented, value: "12" },
+    { icon: Award, label: t.unescoRecognized, value: "8" },
+    { icon: TrendingUp, label: t.avgRating, value: "4.7" },
+    { icon: Eye, label: t.totalReviews, value: "340K+" },
+  ];
+
   return (
     <div className="border-b bg-muted/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -26,6 +31,7 @@ export function StatsBar() {
               <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
                 <Icon size={16} className="text-primary" />
               </div>
+
               <div>
                 <p className="font-semibold text-sm">{value}</p>
                 <p className="text-muted-foreground text-xs">{label}</p>

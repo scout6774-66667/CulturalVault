@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { Category } from "@/types";
 import { CATEGORIES } from "@/lib/mockData";
 import { getCategoryIcon, cn } from "@/utils";
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/lib/translations";
 
 interface CategoryFilterProps {
   value: Category | "All";
@@ -11,13 +13,26 @@ interface CategoryFilterProps {
 }
 
 export function CategoryFilter({ value, onChange }: CategoryFilterProps) {
+const { language } = useLanguage();
+const t = translations[language];
+const categoryLabels: Record<string, string> = {
+  All: t.all,
+  Architecture: t.architecture,
+  Art: t.art,
+  Music: t.music,
+  Literature: t.literature,
+  Cuisine: t.cuisine,
+  Traditions: t.traditions,
+  Crafts: t.crafts,
+  Dance: t.dance,
+};
   return (
     <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
       {CATEGORIES.map((cat) => {
         const active = value === cat;
         return (
           <motion.button
-            key={cat}
+            key={categoryLabels[cat] || cat}
             onClick={() => onChange(cat as Category | "All")}
             whileTap={{ scale: 0.95 }}
             className={cn(
@@ -28,7 +43,7 @@ export function CategoryFilter({ value, onChange }: CategoryFilterProps) {
             )}
           >
             {cat !== "All" && <span className="text-xs">{getCategoryIcon(cat)}</span>}
-            {cat}
+            {categoryLabels[cat] || cat}
           </motion.button>
         );
       })}

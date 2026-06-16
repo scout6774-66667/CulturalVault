@@ -7,6 +7,8 @@ import { Sun, Moon, Bookmark, Menu, X, Globe } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useBookmarks } from "@/context/BookmarksContext";
 import { cn } from "@/utils";
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/lib/translations";
 
 export function Navbar() {
   const { theme, setTheme } = useTheme();
@@ -15,6 +17,8 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
+  const { language } = useLanguage();
+  const t = translations[language];
 
   useEffect(() => { 
     setMounted(true); 
@@ -27,8 +31,8 @@ export function Navbar() {
   }, []);
 
   const navLinks = [
-    { href: "/explore", label: "Explore" },
-    { href: "/bookmarks", label: "Collection" },
+    { href: "/explore", label:  t.explore },
+    { href: "/bookmarks", label: t.bookmarks },
   ];
 
   return (
@@ -69,7 +73,7 @@ export function Navbar() {
               <button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                 className="p-2 rounded-lg hover:bg-secondary transition-colors"
-                aria-label="Toggle theme"
+                aria-label={t.toggleTheme}
               >
                 {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
               </button>
@@ -77,7 +81,7 @@ export function Navbar() {
             <Link
               href="/bookmarks"
               className="relative p-2 rounded-lg hover:bg-secondary transition-colors"
-              aria-label="Bookmarks"
+              aria-label={t.bookmarks}
             >
               <Bookmark size={18} />
               {count > 0 && (
@@ -93,7 +97,7 @@ export function Navbar() {
                   href="/dashboard"
                   className="text-sm font-medium text-primary hover:underline px-2 hidden sm:block"
                 >
-                  Dashboard
+                  {t.dashboard}
                 </Link>
                 <button
                   onClick={() => {
@@ -103,7 +107,7 @@ export function Navbar() {
                   }}
                   className="text-sm font-medium text-muted-foreground hover:text-foreground px-2"
                 >
-                  Log out
+                  {t.logout}
                 </button>
               </div>
             ) : mounted && !isAuth ? (
@@ -111,14 +115,14 @@ export function Navbar() {
                 href="/signin"
                 className="hidden sm:flex items-center text-sm font-semibold bg-primary text-primary-foreground px-4 py-2 rounded-full hover:bg-primary/90 transition-colors ml-2"
               >
-                Sign In
+                {t.signIn}
               </Link>
             ) : null}
 
             <button
               className="md:hidden p-2 rounded-lg hover:bg-secondary transition-colors"
               onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label="Menu"
+              aria-label={t.menu}
             >
               {mobileOpen ? <X size={18} /> : <Menu size={18} />}
             </button>

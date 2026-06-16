@@ -13,6 +13,9 @@ import { Pagination } from "@/components/ui/Pagination";
 import { StatsBar } from "@/components/layout/StatsBar";
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/lib/translations";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const DEFAULT_FILTERS: FilterState = {
   search: "",
@@ -25,6 +28,8 @@ export default function HomePage() {
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
   const [page, setPage] = useState(1);
   const [debouncedSearch] = useDebounce(filters.search, 350);
+  const { language } = useLanguage();
+  const t = translations[language];
 
   const activeFilters = { ...filters, search: debouncedSearch };
   const { items, loading, error, total } = useItems(activeFilters, page);
@@ -58,26 +63,31 @@ export default function HomePage() {
       <StatsBar />
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Controls */}
-        <motion.div 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-col gap-4 mb-8"
-        >
-          <div className="flex flex-col sm:flex-row gap-3">
-            <SearchBar
-              value={filters.search}
-              onChange={handleSearchChange}
-              placeholder="Search cultures, places, traditions…"
-              className="flex-1"
-            />
-            <SortSelect value={filters.sortBy} onChange={handleSortChange} />
-          </div>
-          <CategoryFilter
-            value={filters.category}
-            onChange={handleCategoryChange}
-          />
-        </motion.div>
+        <motion.div
+  initial={{ opacity: 0, y: 10 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5, delay: 0.2 }}
+  className="flex flex-col gap-4 mb-8"
+>
+  <div className="flex justify-end">
+    <LanguageSwitcher />
+  </div>
+
+  <div className="flex flex-col sm:flex-row gap-3">
+    <SearchBar
+      value={filters.search}
+      onChange={handleSearchChange}
+      placeholder={t.searchPlaceholder}
+      className="flex-1"
+    />
+    <SortSelect value={filters.sortBy} onChange={handleSortChange} />
+  </div>
+
+  <CategoryFilter
+    value={filters.category}
+    onChange={handleCategoryChange}
+  />
+</motion.div>
 
         {/* Results count */}
         {!loading && (
@@ -87,11 +97,11 @@ export default function HomePage() {
             className="text-sm text-muted-foreground mb-6"
           >
             {total === 0
-              ? "No items found"
-              : `Showing ${Math.min((page - 1) * ITEMS_PER_PAGE + 1, total)}–${Math.min(page * ITEMS_PER_PAGE, total)} of ${total} items`}
+              ? t.noItems
+              : `${t.showing} ${Math.min((page - 1) * ITEMS_PER_PAGE + 1, total)}–${Math.min(page * ITEMS_PER_PAGE, total)} ${t.of} ${total} ${t.items}`}
             {debouncedSearch && (
               <span className="ml-1">
-                for <span className="text-foreground font-medium">"{debouncedSearch}"</span>
+                {t.for} <span className="text-foreground font-medium">"{debouncedSearch}"</span>
               </span>
             )}
           </motion.p>

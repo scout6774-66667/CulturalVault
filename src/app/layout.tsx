@@ -5,6 +5,7 @@ import { BookmarksProvider } from "@/context/BookmarksContext";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/Toaster";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 export const metadata: Metadata = {
   title: "CulturalVault — World Heritage Explorer",
@@ -26,13 +27,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="min-h-screen flex flex-col antialiased">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <BookmarksProvider>
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
-            <Toaster />
-          </BookmarksProvider>
-        </ThemeProvider>
+  <LanguageProvider>
+    <BookmarksProvider>
+      <Navbar />
+      <main className="flex-1">{children}</main>
+      <Footer />
+      <Toaster />
+    </BookmarksProvider>
+  </LanguageProvider>
+</ThemeProvider>
       </body>
     </html>
   );
