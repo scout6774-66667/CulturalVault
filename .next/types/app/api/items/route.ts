@@ -1,4 +1,4 @@
-// File: C:\Users\DELL\CulturalVault\src\app\api\items\route.ts
+// File: C:\Users\user\Documents\GitHub\CulturalVault\src\app\api\items\route.ts
 import * as entry from '../../../../../src/app/api/items/route.js'
 import type { NextRequest } from 'next/server.js'
 

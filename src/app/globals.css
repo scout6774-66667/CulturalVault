@@ -4,6 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ADDED: Smooth scrolling for the anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
 @layer base {
   :root {
     --background: 36 33% 97%;

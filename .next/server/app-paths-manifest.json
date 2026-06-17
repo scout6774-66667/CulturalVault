@@ -1,11 +1,7 @@
 {
-  "/admin/login/page": "app/admin/login/page.js",
-  "/(auth)/signup/page": "app/(auth)/signup/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/page": "app/page.js",
-  "/risk-map/page": "app/risk-map/page.js",
+  "/(auth)/signup/page": "app/(auth)/signup/page.js",
   "/explore/page": "app/explore/page.js",
-  "/admin/dashboard/page": "app/admin/dashboard/page.js",
-  "/(auth)/signin/page": "app/(auth)/signin/page.js",
-  "/api/risk-sites/route": "app/api/risk-sites/route.js",
-  "/api/items/route": "app/api/items/route.js"
+  "/(auth)/signin/page": "app/(auth)/signin/page.js"
 }

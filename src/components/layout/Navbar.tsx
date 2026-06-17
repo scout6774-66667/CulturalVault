@@ -2,103 +2,94 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
-import { Sun, Moon, Bookmark, Menu, X, Globe } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Sun, Moon, Bookmark, Menu, Globe } from "lucide-react";
 import { useBookmarks } from "@/context/BookmarksContext";
 import { cn } from "@/utils";
-import { useLanguage } from "@/context/LanguageContext";
-import { translations } from "@/lib/translations";
+import { useSidebar } from "@/context/SidebarContext";
 
 export function Navbar() {
   const { theme, setTheme } = useTheme();
   const { count } = useBookmarks();
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
-  const { language } = useLanguage();
-  const t = translations[language];
+  const pathname = usePathname();
+  
+  const { setMobileOpen } = useSidebar();
 
-  useEffect(() => { 
-    setMounted(true); 
-    setIsAuth(!!localStorage.getItem("user_token"));
-  }, []);
   useEffect(() => {
+    setIsAuth(!!localStorage.getItem("user_token"));
+    
     const handler = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handler);
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
-  const navLinks = [
-    { href: "/explore", label:  t.explore },
-    { href: "/bookmarks", label: t.bookmarks },
-    { href: "/risk-map", label: "Risk Dashboard" },
-  ];
-
   return (
-    <header className={cn(
-      "sticky top-0 z-50 transition-all duration-300",
-      scrolled
-        ? "bg-background/95 backdrop-blur-md border-b border-border shadow-sm"
-        : "bg-transparent"
-    )}>
+    <header
+      className={cn(
+        "sticky top-0 z-50 transition-all duration-300 w-full",
+        scrolled
+          ? "bg-background/95 backdrop-blur-md border-b border-border shadow-sm"
+          : "bg-transparent"
+      )}
+    >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
-              <Globe size={16} className="text-white" />
-            </div>
-            <span className="font-display text-xl font-bold">
-              Cultural<span className="text-primary">Vault</span>
-            </span>
-          </Link>
-
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Actions */}
-          <div className="flex items-center gap-2">
-            {mounted && (
+        
+        {/* Changed to grid-cols-2 to force left/right alignment */}
+        <div className="grid grid-cols-2 items-center h-16 w-full">
+          
+          {/* 1. Left Side: Logo & Mobile Menu */}
+          <div className="flex items-center justify-start gap-4">
+            {pathname !== "/" && (
               <button
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="p-2 rounded-lg hover:bg-secondary transition-colors"
-                aria-label={t.toggleTheme}
+                onClick={() => setMobileOpen(true)}
+                className="p-2 rounded-lg hover:bg-secondary transition-colors md:hidden"
               >
-                {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+                <Menu size={20} />
               </button>
             )}
+            
+            <Link href="/" className="flex items-center gap-2">
+              <div className="p-1.5 bg-primary rounded-lg flex items-center justify-center">
+                <Globe size={18} className="text-primary-foreground" />
+              </div>
+              <span className="font-bold text-lg tracking-tight">CulturalVault</span>
+            </Link>
+          </div>
+
+          {/* 2. Right Side: Actions (Theme, Bookmarks, Sign In) */}
+          <div className="flex items-center justify-end gap-3 shrink-0">
+            
+            {/* Theme Toggle */}
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="relative p-2 rounded-lg hover:bg-secondary transition-colors flex items-center justify-center h-9 w-9"
+              aria-label="Toggle Theme"
+            >
+              <Sun size={18} className="absolute rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon size={18} className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            </button>
+            
+            {/* Bookmarks */}
             <Link
-              href="/bookmarks"
-              className="relative p-2 rounded-lg hover:bg-secondary transition-colors"
-              aria-label={t.bookmarks}
+              href="/explore#bookmarks"
+              className="relative p-2 rounded-lg hover:bg-secondary transition-colors flex items-center justify-center h-9 w-9"
             >
               <Bookmark size={18} />
               {count > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-primary text-primary-foreground text-[10px] font-bold rounded-full flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary text-primary-foreground text-[10px] font-bold rounded-full flex items-center justify-center">
                   {count > 9 ? "9+" : count}
                 </span>
               )}
             </Link>
-            
-            {mounted && isAuth ? (
+
+            {/* Auth Buttons */}
+            {isAuth ? (
               <div className="flex items-center gap-2">
-                <Link
-                  href="/dashboard"
-                  className="text-sm font-medium text-primary hover:underline px-2 hidden sm:block"
-                >
-                  {t.dashboard}
+                <Link href="/dashboard" className="text-sm font-medium text-primary hover:underline px-2 hidden sm:block">
+                  Dashboard
                 </Link>
                 <button
                   onClick={() => {
@@ -108,53 +99,21 @@ export function Navbar() {
                   }}
                   className="text-sm font-medium text-muted-foreground hover:text-foreground px-2"
                 >
-                  {t.logout}
+                  Logout
                 </button>
               </div>
-            ) : mounted && !isAuth ? (
+            ) : (
               <Link
                 href="/signin"
-                className="hidden sm:flex items-center text-sm font-semibold bg-primary text-primary-foreground px-4 py-2 rounded-full hover:bg-primary/90 transition-colors ml-2"
+                className="hidden sm:flex items-center justify-center text-sm font-bold bg-primary text-primary-foreground px-5 py-2 rounded-full hover:bg-primary/90 transition-colors ml-1 whitespace-nowrap"
               >
-                {t.signIn}
+                Sign In
               </Link>
-            ) : null}
-
-            <button
-              className="md:hidden p-2 rounded-lg hover:bg-secondary transition-colors"
-              onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label={t.menu}
-            >
-              {mobileOpen ? <X size={18} /> : <Menu size={18} />}
-            </button>
+            )}
           </div>
+          
         </div>
       </nav>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden border-t bg-background"
-          >
-            <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="px-4 py-2.5 rounded-lg hover:bg-secondary text-sm font-medium transition-colors"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </header>
   );
 }

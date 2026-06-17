@@ -1,4 +1,4 @@
-// File: C:\Users\DELL\CulturalVault\src\app\explore\page.tsx
+// File: C:\Users\user\Documents\GitHub\CulturalVault\src\app\explore\page.tsx
 import * as entry from '../../../../src/app/explore/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

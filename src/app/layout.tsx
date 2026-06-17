@@ -2,15 +2,14 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "leaflet/dist/leaflet.css";
 
-
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { BookmarksProvider } from "@/context/BookmarksContext";
 import { LanguageProvider } from "@/context/LanguageContext";
+import { SidebarProvider } from "@/context/SidebarContext"; // <-- ADDED THIS
 
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
+import { Sidebar } from "@/components/layout/Sidebar"; // <-- ADDED THIS
+import { MainLayout } from "@/components/layout/MainLayout"; // <-- ADDED THIS
 import { Toaster } from "@/components/ui/Toaster";
-
 
 export const metadata: Metadata = {
   title: "CulturalVault — World Heritage Explorer",
@@ -30,17 +29,26 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className="min-h-screen flex flex-col antialiased">
+      {/* Added overflow-x-hidden to prevent horizontal scrolling bugs */}
+      <body className="min-h-screen flex flex-col antialiased bg-background overflow-x-hidden">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-  <LanguageProvider>
-    <BookmarksProvider>
-      <Navbar />
-      <main className="flex-1">{children}</main>
-      <Footer />
-      <Toaster />
-    </BookmarksProvider>
-  </LanguageProvider>
-</ThemeProvider>
+          <LanguageProvider>
+            <BookmarksProvider>
+              {/* Wrapped everything in SidebarProvider */}
+              <SidebarProvider>
+                
+                <div className="flex min-h-screen w-full">
+                  <Sidebar />
+                  <MainLayout>
+                    {children}
+                  </MainLayout>
+                </div>
+                
+                <Toaster />
+              </SidebarProvider>
+            </BookmarksProvider>
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
